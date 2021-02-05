@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private Camera followCam;
     
     public float speed = 6f;
-    public float jumpVelocity = 20f;
+    public float jumpVelocity = 10f;
     [Range(0.01f, 1f)] public float airControlPercent;
 
     public float speedSmoothTime = 0.1f;
@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (currentSpeed > 0.2f) Rotate();
+        if (currentSpeed > 0.2f || playerInput.fire) Rotate();
 
         Move(playerInput.moveInput);
         
