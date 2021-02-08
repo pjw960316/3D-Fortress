@@ -13,15 +13,17 @@ public class PlayerInput : MonoBehaviour
 
     // 값 할당은 내부에서만 가능
     public Vector2 moveInput { get; private set; }
-    public bool fire { get; private set; } // 감지된 발사 입력값
+    public bool isfire { get; private set; } // 감지된 발사 입력값
+
+    public bool isfiredown {get; private set;}
+    public bool isfireup {get; private set; }
     public bool jump { get; private set; }
 
-    private float player_hp;
-    private const float init_hp = 0;   
+    
 
     private void Start()
     {
-        hp_bar.value = init_hp;       
+
     }
 
     // 매프레임 사용자 입력을 감지
@@ -32,7 +34,7 @@ public class PlayerInput : MonoBehaviour
             && GameManager.Instance.isGameover)
         {
             moveInput = Vector2.zero;
-            fire = false;
+            isfiredown = false;
             jump = false;
             return;
         }
@@ -41,7 +43,10 @@ public class PlayerInput : MonoBehaviour
         if (moveInput.sqrMagnitude > 1) moveInput = moveInput.normalized;
 
         jump = Input.GetButtonDown(jumpButtonName);
-        fire = Input.GetButton(fireButtonName);                
+        
+        isfiredown = Input.GetButtonDown(fireButtonName);
+        isfire = Input.GetButton(fireButtonName);                
+        isfireup = Input.GetButtonUp(fireButtonName);
     }
      
 
