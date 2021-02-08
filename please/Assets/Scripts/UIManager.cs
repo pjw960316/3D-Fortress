@@ -7,6 +7,8 @@ public class UIManager : MonoBehaviour
 {
     
     public Slider powerSlide;
+    
+    public Slider hpBar;
     public Image crossHair;
     public Text remainTimeText;
     public Text announceText;
@@ -26,9 +28,8 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        powerSlide = GetComponent<Slider>();
-        crossHair = GetComponent<Image>();
-
+        // powerSlide = GetComponent<Slider>();
+        // crossHair = GetComponent<Image>();
 
     }
 
@@ -38,6 +39,10 @@ public class UIManager : MonoBehaviour
 
     public void SetAnnounceText(string text){
         announceText.text = text;
+    }
+
+    public void UpdateHpBar(int value){
+        hpBar.value = value;
     }
 
 }
