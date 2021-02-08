@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 // 플레이어 캐릭터를 조작하기 위한 사용자 입력을 감지
 // 감지된 입력값을 다른 컴포넌트들이 사용할 수 있도록 제공
@@ -8,13 +9,20 @@ public class PlayerInput : MonoBehaviour
     public string jumpButtonName = "Jump";
     public string moveHorizontalAxisName = "Horizontal"; // 좌우 회전을 위한 입력축 이름
     public string moveVerticalAxisName = "Vertical"; // 앞뒤 움직임을 위한 입력축 이름
+    public Slider hp_bar; 
 
     // 값 할당은 내부에서만 가능
-
     public Vector2 moveInput { get; private set; }
     public bool fire { get; private set; } // 감지된 발사 입력값
     public bool jump { get; private set; }
-    
+
+    private float player_hp;
+    private const float init_hp = 0;   
+
+    private void Start()
+    {
+        hp_bar.value = init_hp;       
+    }
 
     // 매프레임 사용자 입력을 감지
     private void Update()
@@ -33,6 +41,15 @@ public class PlayerInput : MonoBehaviour
         if (moveInput.sqrMagnitude > 1) moveInput = moveInput.normalized;
 
         jump = Input.GetButtonDown(jumpButtonName);
-        fire = Input.GetButton(fireButtonName);
+        fire = Input.GetButton(fireButtonName);                
     }
+     
+
+    //플레이어 체력 감소를 UI에 표기 
+    //일단 HP 감소 인자가 없으므로 그냥 -30
+    private void ChangeHpBar()
+    {
+        hp_bar.value += 10;
+    }   
+    
 }
