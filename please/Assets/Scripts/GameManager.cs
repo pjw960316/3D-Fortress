@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     public bool playerTurn;
     private float remainTime = 60f;
-    public static GameManager Instance
+    public static GameManager Instance  
     {
         get
         {
@@ -16,8 +17,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public Slider power_gauge;
+    private bool is_up = true;
     private int score;
-    public bool isGameover { get; private set; }
+    public bool isGameover { get; private set; } 
 
     private void Awake()
     {
@@ -28,7 +31,19 @@ public class GameManager : MonoBehaviour
         playerTurn = !playerTurn;
         StartCoroutine(RoundRoutine());
     }
-    
+
+    //파워 슬라이드의 코루틴 사용에 대해 이야기가 필요할 것 같아서 일단 하던 방식으로 구현함
+    private void FixedUpdate()
+    {
+        if(Input.GetMouseButton(1) == true)
+        {
+            MovePowerGage();
+        }        
+        else
+        {
+            power_gauge.value = 0;
+        }
+    }
     IEnumerator RoundRoutine(){
 
         UIManager.Instance.SetAnnounceText(playerTurn + "의 턴");
@@ -53,7 +68,30 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         Reset();
+    }
 
+    private void MovePowerGage()
+    {
+        if(power_gauge.value == 0)
+        {
+            power_gauge.value = 1;
+            is_up = true;
+            return;
+        }
+        if (power_gauge.value == 100)
+        {
+            power_gauge.value = 99;
+            is_up = false;
+            return;
+        }
+        if (is_up == true)
+        {
+            power_gauge.value += 1;
+        }
+        else
+        {
+            power_gauge.value -= 1;
+        }      
     }
 
 }
