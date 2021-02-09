@@ -30,14 +30,14 @@ public class PlayerShooter : MonoBehaviour
             Fire();
             
             //test
-            isfired = false;
+            //isfired = false;
         }
     }
 
     private void Fire(){
         isfired = true;
 
-        Rigidbody ballInstance = Instantiate(ball, playerCamera.transform.position, playerCamera.transform.rotation);
+        Rigidbody ballInstance = Instantiate(ball, playerCamera.transform.position, Quaternion.Euler(Vector3.zero));
         ballInstance.velocity = fireForce * playerCamera.transform.forward;
         Destroy(ballInstance.gameObject, destroyTime);
         

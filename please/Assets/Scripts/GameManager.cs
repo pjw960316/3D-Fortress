@@ -1,12 +1,17 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     public bool playerTurn;
 
+    public GameObject mainCam;
+    public GameObject worldCam;
+
+    private GameObject ball;
     public PlayerInput playerInput;
     private bool isPlayerShoot;
     private float remainTime = 60f;
@@ -34,7 +39,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start(){
-
+        //worldCam = GameObject.Find("World Cam");
     }
     
     private void Reset(){
@@ -58,14 +63,34 @@ public class GameManager : MonoBehaviour
 
         UIManager.Instance.SetAnnounceText(playerTurn + "의 턴");
 
+        mainCam.SetActive(true);
+        
         //카메라 시점 현재 플레이어 따라가도록 설정
 
         // 마우스 우측키 누르고 있는동안 파워 슬라이드 게이지 왔다갔다 // private enum State pushdown push up 으로 구분? 
         // 다른 ball shooter 스크립트 만들어서 따로 구현?
         
-        while(!isPlayerShoot){
+
+        while(!PlayerShooter.isfired){
             yield return null;
         }
+        
+        ball = GameObject.FindWithTag("Ball");
+        Debug.Log(ball);
+
+        mainCam.SetActive(false);
+        
+        
+        
+
+        
+
+        
+        
+
+    
+
+        
         // 1초마다 남은시간 ui update 해줘야 함
 
         // 마우스 떼면 포탄에 화면 가운데에 있는 크로스헤어 방향으로 슬라이더 게이지 value의 힘으로 ball 게임오브젝트 발사

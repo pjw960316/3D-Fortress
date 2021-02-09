@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (currentSpeed > 0.2f || playerInput.isfiredown) Rotate();
+        if (currentSpeed > 0.2f || playerInput.isfiredown || playerInput.isfire) Rotate();
 
         Move(playerInput.moveInput);
         
