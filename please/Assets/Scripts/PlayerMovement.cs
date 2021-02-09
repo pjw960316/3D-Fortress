@@ -30,11 +30,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (currentSpeed > 0.2f || playerInput.isfiredown || playerInput.isfire) Rotate();
+        if (currentSpeed > 0.2f || playerInput.isfiredown || playerInput.isfire) 
+            Rotate();
 
         Move(playerInput.moveInput);
         
-        if (playerInput.jump) Jump();
+        if (playerInput.jump) 
+            Jump();
     }
 
     public void Move(Vector2 moveInput)
@@ -45,11 +47,16 @@ public class PlayerMovement : MonoBehaviour
         targetSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, speedSmoothTime);
         currentVelocityY += Time.deltaTime * Physics.gravity.y;
 
+
+        
+
         var velocity = moveDirection * targetSpeed + Vector3.up * currentVelocityY;
+
 
         characterController.Move(velocity * Time.deltaTime);
 
-        if (characterController.isGrounded) currentVelocityY = 0;
+        if (characterController.isGrounded) 
+            currentVelocityY = 0;
     }
 
     public void Rotate()
