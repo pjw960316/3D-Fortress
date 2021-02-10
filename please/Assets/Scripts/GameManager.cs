@@ -28,7 +28,11 @@ public class GameManager : MonoBehaviour
     public Slider power_gauge;
     private bool power_gauge_is_up = true;
     private int score;
-    public bool isGameover { get; private set; } 
+    public bool isGameover { get; private set; }
+
+    private float time_span = 0f;
+    private const float spawn_time_limit = 3f; //test라 3f
+    public GameObject[] spawning_objects = new GameObject[4];
 
     private void Awake()
     {
@@ -50,6 +54,12 @@ public class GameManager : MonoBehaviour
     //파워 슬라이드의 코루틴 사용에 대해 이야기가 필요할 것 같아서 일단 하던 방식으로 구현함
     private void FixedUpdate()
     {
+        time_span += Time.deltaTime;
+        if(time_span > spawn_time_limit)
+        {
+            SpawnItems();
+            time_span = 0f;
+        }
         if(playerInput.isfire == true)
         {
             MovePowerGage();
@@ -130,6 +140,21 @@ public class GameManager : MonoBehaviour
         {
             power_gauge.value -= 1;
         }      
+    }
+
+    private void SpawnItems()
+    {
+        int rand_zero_to_four = 0;
+        float rand_x = 0;
+        float rand_z = 0;
+        if (playerTurn == true)
+        {
+            rand_zero_to_four = Random.Range(0, 4);
+            rand_x = Random.Range(-4f, 4f);
+            rand_z = Random.Range(-4f, 4f);
+            GameObject spawned_object = Instantiate(spawning_objects[rand_zero_to_four], new Vector3(rand_x,0f,rand_z), transform.rotation);
+            Destroy(spawned_object, 60f); //TODO : 코루틴에서 플레이어 턴이 바뀌면 장애물 모두 태그로 찾아서 삭제.
+        }
     }
 
 }

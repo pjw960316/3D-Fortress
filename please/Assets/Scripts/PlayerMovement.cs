@@ -20,7 +20,9 @@ public class PlayerMovement : MonoBehaviour
     
     public float currentSpeed =>
         new Vector2(characterController.velocity.x, characterController.velocity.z).magnitude;
-    
+
+    public bool is_player_stunned = false;
+
     private void Start()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -33,7 +35,10 @@ public class PlayerMovement : MonoBehaviour
         if (currentSpeed > 0.2f || playerInput.isfiredown || playerInput.isfire) 
             Rotate();
 
-        Move(playerInput.moveInput);
+        if (is_player_stunned == false)
+        {
+            Move(playerInput.moveInput);
+        }
         
         if (playerInput.jump) 
             Jump();
