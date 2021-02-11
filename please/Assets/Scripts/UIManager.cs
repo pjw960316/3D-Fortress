@@ -13,6 +13,9 @@ public class UIManager : MonoBehaviour
     public Text remainTimeText;
     public Text announceText;
 
+    public Slider power_gauge;
+    private bool power_gauge_is_up = true;
+
     private static UIManager instance;
     public static UIManager Instance
     {
@@ -30,6 +33,7 @@ public class UIManager : MonoBehaviour
     {
         // powerSlide = GetComponent<Slider>();
         // crossHair = GetComponent<Image>();
+        
 
     }
 
@@ -45,4 +49,28 @@ public class UIManager : MonoBehaviour
         hpBar.value = value;
     }
 
+
+    public void MovePowerGage()
+    {
+        if(power_gauge.value == 0)
+        {
+            power_gauge.value = 1;
+            power_gauge_is_up = true;
+            return;
+        }
+        if (power_gauge.value == 100)
+        {
+            power_gauge.value = 99;
+            power_gauge_is_up = false;
+            return;
+        }
+        if (power_gauge_is_up == true)
+        {
+            power_gauge.value += 1;
+        }
+        else
+        {
+            power_gauge.value -= 1;
+        }      
+    }
 }

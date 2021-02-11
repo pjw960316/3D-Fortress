@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerShooter : MonoBehaviour
 {
     // Start is called before the first frame update
-    public static bool isfired;
+    public bool isFired;
     
     public Rigidbody ball;
     private PlayerInput playerInput;
@@ -15,7 +15,7 @@ public class PlayerShooter : MonoBehaviour
     private float fireForce;
     void Start()
     {
-        isfired = false;
+        isFired = false;
         fireForce = 1;
         playerCamera = Camera.main;
         playerInput = GetComponent<PlayerInput>();
@@ -24,18 +24,16 @@ public class PlayerShooter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playerInput.isfireup && !isfired){
+        if(playerInput.isfireup && !isFired){
             fireForce = UIManager.Instance.powerSlide.value;
             Debug.Log(UIManager.Instance.powerSlide.value);
             Fire();
             
-            //test
-            //isfired = false;
         }
     }
 
     private void Fire(){
-        isfired = true;
+        isFired = true;
 
         Rigidbody ballInstance = Instantiate(ball, playerCamera.transform.position, Quaternion.Euler(Vector3.zero));
         ballInstance.velocity = fireForce * playerCamera.transform.forward;
