@@ -11,8 +11,13 @@ public class Item : MonoBehaviour
         
     private void OnTriggerEnter(Collider other)
     {
-        player_movement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        if(GameManager.Instance.playerTurn){
+            player_movement = GameObject.Find("Player1").GetComponent<PlayerMovement>();
+        }else{
+            player_movement = GameObject.Find("Player2").GetComponent<PlayerMovement>();
+        }
 
+        
         if (gameObject.name == "Trap(Clone)") //TODO : 많은 부분이 겹치면 멈추도록. //TODO : 플레이어에게 무적시간을 주어 다시 안걸리게. 
         {
             player_movement.is_player_stunned = true;

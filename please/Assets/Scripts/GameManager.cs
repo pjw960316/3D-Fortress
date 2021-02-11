@@ -8,11 +8,13 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     public bool playerTurn;
 
-    public GameObject mainCam;
-    public GameObject worldCam;
-
     private GameObject ball;
-    public PlayerInput playerInput;
+    public PlayerInput playerInput1;
+    public PlayerInput playerInput2;
+
+    public PlayerShooter playerShooter1;
+    public PlayerShooter playerShooter2;
+
     private bool isPlayerShoot;
     private float remainTime = 60f;
     public static GameManager Instance  
@@ -25,8 +27,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public Slider power_gauge;
-    private bool power_gauge_is_up = true;
+    
     private int score;
     public bool isGameover { get; private set; }
 
@@ -43,11 +44,17 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start(){
-        //worldCam = GameObject.Find("World Cam");
+        
     }
     
     private void Reset(){
         playerTurn = !playerTurn;
+        playerShooter1.isFired = false;
+        playerShooter2.isFired = false;
+
+        playerInput1.enabled = playerTurn;
+        playerInput2.enabled = !playerTurn;
+        
         StartCoroutine(RoundRoutine());
     }
 
@@ -60,9 +67,9 @@ public class GameManager : MonoBehaviour
             SpawnItems();
             time_span = 0f;
         }
-        if(playerInput.isfire == true)
+        if(playerInput1.isfire || playerInput2.isfire)
         {
-            MovePowerGage();
+            UIManager.Instance.MovePowerGage();
         }        
         else
         {
@@ -73,34 +80,46 @@ public class GameManager : MonoBehaviour
 
         UIManager.Instance.SetAnnounceText(playerTurn + "의 턴");
 
-        mainCam.SetActive(true);
+        
+            CameraManager.Instance.FollowPlayer(playerTurn);
+            
+            
+       
         
         //카메라 시점 현재 플레이어 따라가도록 설정
 
         // 마우스 우측키 누르고 있는동안 파워 슬라이드 게이지 왔다갔다 // private enum State pushdown push up 으로 구분? 
         // 다른 ball shooter 스크립트 만들어서 따로 구현?
         
-
-        while(!PlayerShooter.isfired){
-            yield return null;
+        if(playerTurn){
+            while(!playerShooter1.isFired){
+                yield return null;
+            }
+        }else{
+            while(!playerShooter2.isFired){
+                yield return null;
+            }
         }
+        
         
         ball = GameObject.FindWithTag("Ball");
         Debug.Log(ball);
 
-        mainCam.SetActive(false);
+        CameraManager.Instance.FollowBall();
         
-        
-        
+        while(true){
+            if(ball == null)
+                break;
+            yield return null;
+        }
 
-        
 
-        
-        
+        CameraManager.Instance.FollowPlayer(playerTurn);
+        remainTime = 3f;
 
-    
+        yield return new WaitForSeconds(3f);
 
-        
+
         // 1초마다 남은시간 ui update 해줘야 함
 
         // 마우스 떼면 포탄에 화면 가운데에 있는 크로스헤어 방향으로 슬라이더 게이지 value의 힘으로 ball 게임오브젝트 발사
@@ -112,35 +131,11 @@ public class GameManager : MonoBehaviour
         // 가해진 힘의 세기에 비례해서 플레이어의 체력을 깎기, player에 붙어있는 applyDamage(int damage)함수 발동시켜서 체력 깎기
 
         // 다시 내 플레이어 시점으로 카메라 이동, remainTime 3초로 줄임 
-        
-        yield return new WaitForSeconds(3f);
 
         Reset();
     }
 
-    private void MovePowerGage()
-    {
-        if(power_gauge.value == 0)
-        {
-            power_gauge.value = 1;
-            power_gauge_is_up = true;
-            return;
-        }
-        if (power_gauge.value == 100)
-        {
-            power_gauge.value = 99;
-            power_gauge_is_up = false;
-            return;
-        }
-        if (power_gauge_is_up == true)
-        {
-            power_gauge.value += 1;
-        }
-        else
-        {
-            power_gauge.value -= 1;
-        }      
-    }
+    
 
     private void SpawnItems()
     {

@@ -23,13 +23,16 @@ public class Ball : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, isPlayer);
 
         for(int i=0; i< colliders.Length; i++){
-            Rigidbody target = colliders[i].GetComponent<Rigidbody>();
+            PlayerMovement target = colliders[i].GetComponent<PlayerMovement>();
 
-            target.AddExplosionForce(explosionForce, transform.position, explosionRadius);
+            target.hitforce =explosionForce;
+            target.hitposition = transform.position;
+            target.hitradius = explosionRadius;
+            target.isHit = true;
 
             PlayerHealth playerHealth = colliders[i].GetComponent<PlayerHealth>();
 
-            Vector3 vectordiff = target.position - transform.position;
+            Vector3 vectordiff = target.transform.position - transform.position;
 
             float distance = vectordiff.magnitude;
 
@@ -43,5 +46,6 @@ public class Ball : MonoBehaviour
         }
 
         Destroy(gameObject);
+
     }
 }
