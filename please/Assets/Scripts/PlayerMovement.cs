@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
-
+using Cinemachine;
 public class PlayerMovement : MonoBehaviour
 {
     private CharacterController characterController;
     public PlayerInput playerInput;
-    private Camera followCam;  
     
+    private Camera mainCam;
+    public GameObject vcam;
+
     public float speed = 6f;
     public float jumpVelocity = 10f;
 
     public float hitradius;
-    public Vector3 hitposition;
+    public Vector3 hitvector;
     public float hitforce;
 
     public bool isHit;
@@ -19,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public float speedSmoothTime = 0.1f;
     public float turnSmoothTime = 0.1f;
     
-    public float smoothTime = 0.1f;
+    public float smoothTime = 2f;
 
     private float forceSmoothVelocity;
     private float speedSmoothVelocity;
@@ -40,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         playerInput = GetComponent<PlayerInput>();
-        followCam = Camera.main;
+        mainCam = Camera.main;
         characterController = GetComponent<CharacterController>();
     }
 
@@ -58,8 +60,9 @@ public class PlayerMovement : MonoBehaviour
         if (playerInput.jump) 
             Jump();
 
-        if(isHit)
+        if(isHit){
             AddExplosionForce();
+        }
 
         if(!playerInput.enabled && !characterController.isGrounded){
             Move(Vector3.zero);
@@ -84,10 +87,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void Rotate()
     {
-        var targetRotation = followCam.transform.eulerAngles.y;
+        if(playerInput.enabled == false){
+            return;
+        }
+        var targetRotation = mainCam.transform.eulerAngles.y;
 
         transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation,
                                     ref turnSmoothVelocity, turnSmoothTime);
+
+        
     }
 
     public void Jump()
@@ -97,17 +105,19 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void AddExplosionForce(){
-        var playerSpeed = hitforce;
-        var forcedirection = transform.position - hitposition;
-        forcedirection = new Vector3(forcedirection.x, 0, forcedirection.z);
+        hitvector = new Vector3(hitvector.x, 0, hitvector.z);
 
-        playerSpeed = Mathf.SmoothDamp(playerSpeed, 0, ref forceSmoothVelocity, smoothTime);
-        
-        var velocity = forcedirection * playerSpeed;
+        var playerSpeed = Mathf.SmoothDamp(hitforce, 0, ref forceSmoothVelocity, smoothTime);
+        hitforce = playerSpeed;
+
+        //Debug.Log(playerSpeed);
+        var velocity = hitvector * playerSpeed;
         characterController.Move(velocity * Time.deltaTime);
 
         if(playerSpeed < 0.1f){
+            characterController.Move(Vector3.zero);
             isHit = false;
+            hitforce = 0;
         }          
     }
       

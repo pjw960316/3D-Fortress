@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviour
     public PlayerShooter playerShooter1;
     public PlayerShooter playerShooter2;
 
+    public PlayerMovement playerMovement1;
+
+    public PlayerMovement playerMovement2;
+
     private bool isPlayerShoot;
     private float remainTime = 60f;
     public static GameManager Instance  
@@ -77,10 +81,6 @@ public class GameManager : MonoBehaviour
         {
             UIManager.Instance.MovePowerGage();
         }        
-        else
-        {
-            //power_gauge.value = 0;
-        }
     }
     IEnumerator RoundRoutine(){
 
@@ -89,22 +89,23 @@ public class GameManager : MonoBehaviour
         
             CameraManager.Instance.FollowPlayer(playerTurn);
             
-            
-       
-        
         //카메라 시점 현재 플레이어 따라가도록 설정
 
         // 마우스 우측키 누르고 있는동안 파워 슬라이드 게이지 왔다갔다 // private enum State pushdown push up 으로 구분? 
         // 다른 ball shooter 스크립트 만들어서 따로 구현?
         
         if(playerTurn){
+            
             while(!playerShooter1.isFired){
                 yield return null;
             }
+            
         }else{
+            
             while(!playerShooter2.isFired){
                 yield return null;
             }
+           
         }
         
         
@@ -113,14 +114,20 @@ public class GameManager : MonoBehaviour
 
         CameraManager.Instance.FollowBall();
         
+        playerInput1.enabled = false;
+        playerInput2.enabled = false;
+
         while(true){
             if(ball == null)
                 break;
             yield return null;
         }
 
+        
 
         CameraManager.Instance.FollowPlayer(playerTurn);
+        playerInput1.enabled = playerTurn;
+        playerInput2.enabled = !playerTurn;
         remainTime = 3f;
 
         yield return new WaitForSeconds(3f);
