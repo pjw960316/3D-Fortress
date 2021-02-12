@@ -4,7 +4,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private CharacterController characterController;
     public PlayerInput playerInput;
-    private Camera followCam;
+    private Camera followCam;  
     
     public float speed = 6f;
     public float jumpVelocity = 10f;
@@ -31,6 +31,9 @@ public class PlayerMovement : MonoBehaviour
         new Vector2(characterController.velocity.x, characterController.velocity.z).magnitude;
 
     public bool is_player_stunned = false;
+
+    private const int INVINCIBLE_TIME = 2;
+
     public void StopMove(){
         characterController.Move(Vector3.zero);
     }
@@ -105,10 +108,20 @@ public class PlayerMovement : MonoBehaviour
 
         if(playerSpeed < 0.1f){
             isHit = false;
-        }
-        
-        
+        }          
+    }
+      
+    public void BecomeInvincible()
+    {
+        Debug.Log("player become invincible");
+        gameObject.layer = 9;
+        Invoke("CancleInvincible", INVINCIBLE_TIME);
+    }
+    private void CancleInvincible()
+    {
+        Debug.Log("player become Not_invincible");
+        gameObject.layer = 8;
     }
 
-    
+
 }

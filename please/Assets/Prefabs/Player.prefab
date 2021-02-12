@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3721506840875608852}
   - component: {fileID: 3721506840875608853}
   - component: {fileID: 3721506840875608854}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3721506841215561126}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 3721506842026859657}
   - component: {fileID: 3721506842026859764}
   - component: {fileID: 3721506842026859663}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,7 +220,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3721506842026859761}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
@@ -289,11 +289,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae35d2afb1655a54a9fbd5bf84683853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInput: {fileID: 0}
   speed: 6
   jumpVelocity: 20
+  hitradius: 0
+  hitposition: {x: 0, y: 0, z: 0}
+  hitforce: 0
+  isHit: 0
   airControlPercent: 0
   speedSmoothTime: 0.1
   turnSmoothTime: 0.1
+  smoothTime: 0.1
+  is_player_stunned: 0
 --- !u!114 &3721506842026859764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,7 +313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a09c3a8cdbb34499122cc9e7ebcf53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player_hp: 0
+  player_decreased_hp: 0
 --- !u!114 &3721506842026859663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,5 +326,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 343021e2c0a0cf34a8f83c2fd1ebf51b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFired: 0
   ball: {fileID: 5863238274003326367, guid: e0d6dd87dc79a3245a089bf7d7424df8, type: 3}
   destroyTime: 5
