@@ -25,18 +25,20 @@ public class Ball : MonoBehaviour
         for(int i=0; i< colliders.Length; i++){
             PlayerMovement target = colliders[i].GetComponent<PlayerMovement>();
 
-            target.hitforce =explosionForce;
-            target.hitposition = transform.position;
+            Vector3 vectordiff = target.transform.position - transform.position;
+
+            float distance = vectordiff.magnitude;
+            
+            target.hitforce = ((explosionRadius - distance) / explosionRadius) * explosionForce;
+            target.hitvector = target.transform.position - transform.position;
             target.hitradius = explosionRadius;
             target.isHit = true;
 
             PlayerHealth playerHealth = colliders[i].GetComponent<PlayerHealth>();
 
-            Vector3 vectordiff = target.transform.position - transform.position;
+            
 
-            float distance = vectordiff.magnitude;
-
-            float damage = (explosionRadius - distance) / explosionRadius * maxDamage;
+            float damage = ((explosionRadius - distance) / explosionRadius) * maxDamage;
 
             damage = Mathf.Max(damage, 0);
 

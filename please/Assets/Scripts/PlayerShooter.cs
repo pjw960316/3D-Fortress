@@ -35,6 +35,8 @@ public class PlayerShooter : MonoBehaviour
     private void Fire(){
         isFired = true;
 
+
+        
         Rigidbody ballInstance = Instantiate(ball, playerCamera.transform.position, Quaternion.Euler(Vector3.zero));
         ballInstance.velocity = fireForce * playerCamera.transform.forward;
         Destroy(ballInstance.gameObject, destroyTime);

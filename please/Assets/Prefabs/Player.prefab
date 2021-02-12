@@ -89,7 +89,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 3721506840875608855}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1
@@ -156,7 +156,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3721506842026859761}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1, y: 1, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
@@ -223,9 +223,9 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: -0.3, z: 0}
+  m_Center: {x: 0, y: -0.5, z: 0}
 --- !u!54 &3721506842026859659
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -235,12 +235,12 @@ Rigidbody:
   m_GameObject: {fileID: 3721506842026859761}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!143 &3721506842026859658
 CharacterController:
@@ -289,14 +289,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae35d2afb1655a54a9fbd5bf84683853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 0}
+  playerInput: {fileID: 3721506842026859656}
+  vcam: {fileID: 0}
   speed: 6
-  jumpVelocity: 20
+  jumpVelocity: 10
   hitradius: 0
   hitposition: {x: 0, y: 0, z: 0}
   hitforce: 0
   isHit: 0
-  airControlPercent: 0
+  airControlPercent: 0.1
   speedSmoothTime: 0.1
   turnSmoothTime: 0.1
   smoothTime: 0.1
@@ -327,5 +328,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFired: 0
-  ball: {fileID: 5863238274003326367, guid: e0d6dd87dc79a3245a089bf7d7424df8, type: 3}
+  ball: {fileID: 1626556523034113163, guid: e0d6dd87dc79a3245a089bf7d7424df8, type: 3}
   destroyTime: 5
