@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ball
   - Obstacle
+  - FrontMapObstacle
+  - BackMapObstacle
   layers:
   - Default
   - TransparentFX
