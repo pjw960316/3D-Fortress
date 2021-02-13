@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
@@ -37,11 +38,11 @@ public class GameManager : MonoBehaviour
 
     private float time_span = 0f;
     public float spawn_time_limit;
-    public GameObject[] spawning_objects = new GameObject[4];
+    public GameObject[] spawning_objects = new GameObject[4]; //0 : Trap / 1 : Bomb / 2 : potion / 3 : TempItem
     private GameObject map_tile;
     private Renderer bomb_color;
     private Transform cur_bomb_transform; // TODO : 최근의 폭탄 위치에 의해 모두 삭제 되므로 추후에는 시간 조정해서 겹치지 않게 해야 합니다.
-
+    private static HashSet<int> can_allocate_plane;
     public float obstacle_3_max_ht;
 
     private void Awake()
@@ -53,8 +54,12 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start()
-    {      
-        
+    {
+        can_allocate_plane = new HashSet<int>(); //내가 알기로는 C#은 메모리 해제를 g.c가 알아서 해줌...
+        for (int i = 0; i < 100; i++)
+        {
+            can_allocate_plane.Add(i);
+        }           
     }
     
     private void Reset(){
@@ -64,7 +69,32 @@ public class GameManager : MonoBehaviour
 
         playerInput1.enabled = playerTurn;
         playerInput2.enabled = !playerTurn;
-        
+
+        //반대 진영의 장애물 전체 삭제
+        if (playerTurn == true)
+        {
+            GameObject[] obstacles_will_be_destroyed = GameObject.FindGameObjectsWithTag("BackMapObstacle");
+            foreach(var i in obstacles_will_be_destroyed)
+            {
+                Destroy(i);
+            }
+        }
+        else
+        {
+            GameObject[] obstacles_will_be_destroyed = GameObject.FindGameObjectsWithTag("FrontMapObstacle");
+            foreach (var i in obstacles_will_be_destroyed)
+            {
+                Destroy(i);
+            }
+        }
+
+        //장애물이 나타나는 위치를 겹치지 않게 체크하는 Set
+        can_allocate_plane = new HashSet<int>();
+        for (int i = 0; i < 100; i++)
+        {
+            can_allocate_plane.Add(i);
+        }
+
         StartCoroutine(RoundRoutine());
     }
 
@@ -152,26 +182,42 @@ public class GameManager : MonoBehaviour
 
     private void SpawnItems()
     {
-        int rand_zero_to_four = 0;
-        float start_value = 0;
-        float rand_x = 0;
-        float rand_z = 0;
-
         if (playerTurn == true)
         {
-            start_value = -4f;
-            map_tile = GameObject.Find("MapFront");         
+            map_tile = GameObject.Find("MapFront");
         }
         else
-        { 
-            start_value = 16f;
+        {
             map_tile = GameObject.Find("MapBack");
         }
 
-        rand_zero_to_four = Random.Range(0, 4);
-        rand_x = Random.Range(-4f , 4f);
-        rand_z = Random.Range(start_value, start_value + 8);        
-        GameObject spawned_object = Instantiate(spawning_objects[rand_zero_to_four], new Vector3(rand_x,0.03f,rand_z), transform.rotation);
+        int rand_zero_to_four = Random.Range(0, 4);
+        int map_tile_partial = Random.Range(0, 100);
+        float map_tile_partial_x = map_tile.transform.GetChild(map_tile_partial).transform.position.x;
+        float map_tile_partial_z = map_tile.transform.GetChild(map_tile_partial).transform.position.z;        
+        GameObject spawned_object;
+
+        //Spawn 위치 랜덤(=겹치는 문제 발생) -> Spawn을 바닥의 100개 객체에서 고르기 + 중복은 Hashset을 이용해서 Spawn 하지 않음.
+        if (can_allocate_plane.Contains(map_tile_partial) == true)
+        {
+            can_allocate_plane.Remove(map_tile_partial);
+            spawned_object = Instantiate(spawning_objects[rand_zero_to_four], new Vector3(map_tile_partial_x, 0.03f, map_tile_partial_z),transform.rotation);
+            //턴이 변경되었을 때 반대 진영의 트랩과 포션만 삭제되도록 설정합니다.  
+            if (playerTurn == true && (rand_zero_to_four == 0 || rand_zero_to_four == 2))
+            {
+                spawned_object.tag = "FrontMapObstacle";
+            }
+            if (playerTurn == false && (rand_zero_to_four == 0 || rand_zero_to_four == 2))
+            {
+                spawned_object.tag = "BackMapObstacle";
+            }
+            Debug.Log(playerTurn + "count " + can_allocate_plane.Count);
+        }
+        else
+        {
+            return;
+        }
+        
 
         if (rand_zero_to_four == 1) //Bomb
         {
@@ -188,7 +234,7 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine("UpperHeight",spawned_object);
         }
-        Destroy(spawned_object, 60f); //TODO : 코루틴에서 플레이어 턴이 바뀌면 장애물 모두 태그로 찾아서 삭제.                
+        Destroy(spawned_object, 30f); //TODO : 코루틴에서 플레이어 턴이 바뀌면 장애물 모두 태그로 찾아서 삭제.                
     }
 
     IEnumerator ChangeBombColor(GameObject spawned_object)
@@ -226,9 +272,13 @@ public class GameManager : MonoBehaviour
 
     }
     IEnumerator UpperHeight(GameObject spawned_object)
-    {
+    {        
         while (spawned_object.transform.localScale.y < obstacle_3_max_ht)
         {
+            if (spawned_object == null)
+            {
+                yield break;
+            }
             spawned_object.transform.localScale += new Vector3(0, 0.2f, 0);
             yield return new WaitForSeconds(0.3f);
         }
