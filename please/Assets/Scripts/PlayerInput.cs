@@ -30,14 +30,14 @@ public class PlayerInput : MonoBehaviour
     private void Update()
     {
         //게임오버 상태에서는 사용자 입력을 감지하지 않는다
-        if (GameManager.Instance != null
-            && GameManager.Instance.isGameover)
-        {
-            moveInput = Vector2.zero;
-            isfiredown = false;
-            jump = false;
-            return;
-        }
+        // if (GameManager.Instance != null
+        //     && GameManager.Instance.isGameover)
+        // {
+        //     moveInput = Vector2.zero;
+        //     isfiredown = false;
+        //     jump = false;
+        //     return;
+        // }
 
         moveInput = new Vector2(Input.GetAxis(moveHorizontalAxisName), Input.GetAxis(moveVerticalAxisName));
         if (moveInput.sqrMagnitude > 1) moveInput = moveInput.normalized;
@@ -52,9 +52,9 @@ public class PlayerInput : MonoBehaviour
 
     //플레이어 체력 감소를 UI에 표기 
     //일단 HP 감소 인자가 없으므로 그냥 -30
-    private void ChangeHpBar()
-    {
-        hp_bar.value += 10;
-    }   
+    // private void ChangeHpBar()
+    // {
+    //     hp_bar.value += 10;
+    // }   
     
 }

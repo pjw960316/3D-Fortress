@@ -6,8 +6,6 @@ public class PlayerMovement : MonoBehaviour
     public PlayerInput playerInput;
     
     private Camera mainCam;
-    public GameObject vcam;
-
     public float speed = 6f;
     public float jumpVelocity = 10f;
 
@@ -105,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void AddExplosionForce(){
-        hitvector = new Vector3(hitvector.x, 0, hitvector.z);
+        hitvector = new Vector3(hitvector.x, 0, hitvector.z).normalized;
 
         var playerSpeed = Mathf.SmoothDamp(hitforce, 0, ref forceSmoothVelocity, smoothTime);
         hitforce = playerSpeed;
@@ -123,13 +121,13 @@ public class PlayerMovement : MonoBehaviour
       
     public void BecomeInvincible()
     {
-        Debug.Log("player become invincible");
+        //Debug.Log("player become invincible");
         gameObject.layer = 9;
         Invoke("CancleInvincible", INVINCIBLE_TIME);
     }
     private void CancleInvincible()
     {
-        Debug.Log("player become Not_invincible");
+       // Debug.Log("player become Not_invincible");
         gameObject.layer = 8;
     }
 

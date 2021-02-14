@@ -20,34 +20,48 @@ public class Ball : MonoBehaviour
 
    
     private void OnTriggerEnter(Collider other){
+        Debug.Log("other:" + other.name);
+        Destroy(gameObject);
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, isPlayer);
 
+
+        HashSet<string> damaged = new HashSet<string>();
+
         for(int i=0; i< colliders.Length; i++){
-            PlayerMovement target = colliders[i].GetComponent<PlayerMovement>();
 
-            Vector3 vectordiff = target.transform.position - transform.position;
+            if (!damaged.Contains(colliders[i].name)){
+                damaged.Add(colliders[i].name);
+                PlayerMovement target = colliders[i].GetComponent<PlayerMovement>();
 
-            float distance = vectordiff.magnitude;
-            
-            target.hitforce = ((explosionRadius - distance) / explosionRadius) * explosionForce;
-            target.hitvector = target.transform.position - transform.position;
-            target.hitradius = explosionRadius;
-            target.isHit = true;
+                Vector3 vectordiff = target.transform.position - transform.position;
 
-            PlayerHealth playerHealth = colliders[i].GetComponent<PlayerHealth>();
+                float distance = vectordiff.magnitude;
+                
+                target.hitforce = ((explosionRadius - distance) / explosionRadius) * explosionForce;
+                target.hitvector = target.transform.position - transform.position;
+                target.hitradius = explosionRadius;
+                target.isHit = true;
 
-            
+                
+                PlayerHealth playerHealth = colliders[i].GetComponent<PlayerHealth>();
 
-            float damage = ((explosionRadius - distance) / explosionRadius) * maxDamage;
+                
 
-            damage = Mathf.Max(damage, 0);
+                float damage = ((explosionRadius - distance) / explosionRadius) * maxDamage;
 
-            playerHealth.ApplyDamage((int)damage);
+                damage = Mathf.Max(damage, 0);
 
+                Debug.Log("Damage:" + damage);
+                Debug.Log(colliders[i].name);
+                Debug.Log(colliders.Length);
+                playerHealth.ApplyDamage((int)damage);
+            }else{
+                continue;
+            }
             
         }
 
-        Destroy(gameObject);
+        
 
     }
 }
