@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
     public Slider powerSlide;
     
     public Slider hpBar;
+
+
     public Image crossHair;
     public Text remainTimeText;
     public Text announceText;

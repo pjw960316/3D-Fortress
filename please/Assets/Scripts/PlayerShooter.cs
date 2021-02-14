@@ -26,7 +26,7 @@ public class PlayerShooter : MonoBehaviour
     {
         if(playerInput.isfireup && !isFired){
             fireForce = UIManager.Instance.powerSlide.value;
-            Debug.Log(UIManager.Instance.powerSlide.value);
+            //Debug.Log(UIManager.Instance.powerSlide.value);
             Fire();
             
         }

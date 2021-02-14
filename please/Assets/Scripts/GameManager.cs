@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public PlayerMovement playerMovement2;
 
     private bool isPlayerShoot;
-    private float remainTime = 60f;
+    private int remainTime;
     public static GameManager Instance  
     {
         get
@@ -67,6 +67,10 @@ public class GameManager : MonoBehaviour
         playerShooter1.isFired = false;
         playerShooter2.isFired = false;
 
+
+        remainTime = 60;
+    
+
         playerInput1.enabled = playerTurn;
         playerInput2.enabled = !playerTurn;
 
@@ -96,6 +100,7 @@ public class GameManager : MonoBehaviour
         }
 
         StartCoroutine(RoundRoutine());
+        
     }
 
     //파워 슬라이드의 코루틴 사용에 대해 이야기가 필요할 것 같아서 일단 하던 방식으로 구현함
@@ -113,7 +118,7 @@ public class GameManager : MonoBehaviour
         }        
     }
     IEnumerator RoundRoutine(){
-
+        StartCoroutine(Timer());
         UIManager.Instance.SetAnnounceText(playerTurn + "의 턴");
 
         
@@ -140,7 +145,7 @@ public class GameManager : MonoBehaviour
         
         
         ball = GameObject.FindWithTag("Ball");
-        Debug.Log(ball);
+        //Debug.Log(ball);
 
         CameraManager.Instance.FollowBall();
         
@@ -158,7 +163,7 @@ public class GameManager : MonoBehaviour
         CameraManager.Instance.FollowPlayer(playerTurn);
         playerInput1.enabled = playerTurn;
         playerInput2.enabled = !playerTurn;
-        remainTime = 3f;
+        remainTime = 3;
 
         yield return new WaitForSeconds(3f);
 
@@ -174,7 +179,6 @@ public class GameManager : MonoBehaviour
         // 가해진 힘의 세기에 비례해서 플레이어의 체력을 깎기, player에 붙어있는 applyDamage(int damage)함수 발동시켜서 체력 깎기
 
         // 다시 내 플레이어 시점으로 카메라 이동, remainTime 3초로 줄임 
-
         Reset();
     }
 
@@ -211,7 +215,7 @@ public class GameManager : MonoBehaviour
             {
                 spawned_object.tag = "BackMapObstacle";
             }
-            Debug.Log(playerTurn + "count " + can_allocate_plane.Count);
+            //Debug.Log(playerTurn + "count " + can_allocate_plane.Count);
         }
         else
         {
@@ -284,4 +288,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    IEnumerator Timer(){
+        while(remainTime > 0){
+            UIManager.Instance.UpdateTimeText(remainTime);
+            remainTime -= 1;
+            if(remainTime == 0){
+                break;
+            }
+            yield return new WaitForSeconds(1f);
+        }
+        
+    }
 }
