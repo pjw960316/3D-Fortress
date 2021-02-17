@@ -19,11 +19,15 @@ public class PlayerInput : MonoBehaviour
     public bool isfireup {get; private set; }
     public bool jump { get; private set; }
 
-    
-
+    public int weapon_number { get; private set; }
+    private const int max_weapon_cnt = 3;
+    public int cur_weapon_cnt { get; private set; } //TODO : 아이템으로 무기 획득
+    public int cur_weapon_number { get; private set; }
+       
     private void Start()
     {
-
+        cur_weapon_cnt = 3; // 현재 무기를 3개 먹었다고 가정.
+        cur_weapon_number = 1; 
     }
 
     // 매프레임 사용자 입력을 감지
@@ -47,14 +51,23 @@ public class PlayerInput : MonoBehaviour
         isfiredown = Input.GetButtonDown(fireButtonName);
         isfire = Input.GetButton(fireButtonName);                
         isfireup = Input.GetButtonUp(fireButtonName);
-    }
-     
 
-    //플레이어 체력 감소를 UI에 표기 
-    //일단 HP 감소 인자가 없으므로 그냥 -30
-    // private void ChangeHpBar()
-    // {
-    //     hp_bar.value += 10;
-    // }   
+        if(Input.GetKeyDown(KeyCode.Tab) == true)
+        {
+            if(cur_weapon_number == cur_weapon_cnt)
+            {
+                cur_weapon_number = 1;
+            }
+            else
+            {
+                cur_weapon_number++;
+            }
+            Debug.Log("Player's Current Weapon Number : " + cur_weapon_number);
+        }
+    }
+    
+    
+
+      
     
 }

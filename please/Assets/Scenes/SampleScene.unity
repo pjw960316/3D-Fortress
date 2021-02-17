@@ -469,7 +469,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 91092396}
-  m_LocalRotation: {x: 0.028314002, y: 0.19355516, z: -0.0055883727, w: 0.98066485}
+  m_LocalRotation: {x: 0.028314441, y: 0.19347829, z: -0.005586154, w: 0.98068005}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3101,7 +3101,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 301319816}
-  m_LocalRotation: {x: 0.0011139503, y: 0.1936357, z: -0.00021986192, w: 0.98107284}
+  m_LocalRotation: {x: 0.0011139674, y: 0.19355877, z: -0.00021977453, w: 0.98108804}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4241,7 +4241,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 402374247}
-  m_LocalRotation: {x: 0.05602364, y: 0.19331984, z: -0.011057462, w: 0.9794726}
+  m_LocalRotation: {x: 0.05602451, y: 0.19324304, z: -0.011053069, w: 0.9794878}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5756,7 +5756,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 596859103}
-  m_LocalRotation: {x: 0.028314002, y: 0.19355516, z: -0.0055883727, w: 0.98066485}
+  m_LocalRotation: {x: 0.028314441, y: 0.19347829, z: -0.005586154, w: 0.98068005}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -10225,7 +10225,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.028314006, y: 0.19355516, z: -0.005588373, w: 0.98066485}
+  m_LocalRotation: {x: 0.028314434, y: 0.19347827, z: -0.005586151, w: 0.98068005}
   m_LocalPosition: {x: 19, y: 1.95, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -16214,6 +16214,23 @@ PrefabInstance:
       propertyPath: hp_bar
       value: 
       objectReference: {fileID: 681417370}
+    - target: {fileID: 3721506842026859663, guid: 93d8fa11cdfddd64c85484bb2032c75f,
+        type: 3}
+      propertyPath: ball
+      value: 
+      objectReference: {fileID: 1626556523034113161, guid: e0d6dd87dc79a3245a089bf7d7424df8,
+        type: 3}
+    - target: {fileID: 3721506842026859663, guid: 93d8fa11cdfddd64c85484bb2032c75f,
+        type: 3}
+      propertyPath: ball_rigid
+      value: 
+      objectReference: {fileID: 1626556523034113163, guid: e0d6dd87dc79a3245a089bf7d7424df8,
+        type: 3}
+    - target: {fileID: 3721506842026859663, guid: 93d8fa11cdfddd64c85484bb2032c75f,
+        type: 3}
+      propertyPath: ball_material
+      value: 
+      objectReference: {fileID: 2100000, guid: 50e2c889931b69743b30fe0ecfb50c12, type: 2}
     - target: {fileID: 3721506842026859761, guid: 93d8fa11cdfddd64c85484bb2032c75f,
         type: 3}
       propertyPath: m_Name
@@ -16347,7 +16364,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500647990}
-  m_LocalRotation: {x: 0.05602364, y: 0.19331984, z: -0.011057462, w: 0.9794726}
+  m_LocalRotation: {x: 0.05602451, y: 0.19324304, z: -0.011053069, w: 0.9794878}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -18402,7 +18419,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1709567934}
-  m_LocalRotation: {x: 0.0011139478, y: 0.1936357, z: -0.00021986142, w: 0.98107284}
+  m_LocalRotation: {x: 0.0011139651, y: 0.19355877, z: -0.0002197741, w: 0.98108804}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -22410,6 +22427,23 @@ PrefabInstance:
       propertyPath: hp_bar
       value: 
       objectReference: {fileID: 681417370}
+    - target: {fileID: 3721506842026859663, guid: 93d8fa11cdfddd64c85484bb2032c75f,
+        type: 3}
+      propertyPath: ball
+      value: 
+      objectReference: {fileID: 1626556523034113161, guid: e0d6dd87dc79a3245a089bf7d7424df8,
+        type: 3}
+    - target: {fileID: 3721506842026859663, guid: 93d8fa11cdfddd64c85484bb2032c75f,
+        type: 3}
+      propertyPath: ball_rigid
+      value: 
+      objectReference: {fileID: 1626556523034113163, guid: e0d6dd87dc79a3245a089bf7d7424df8,
+        type: 3}
+    - target: {fileID: 3721506842026859663, guid: 93d8fa11cdfddd64c85484bb2032c75f,
+        type: 3}
+      propertyPath: ball_material
+      value: 
+      objectReference: {fileID: 2100000, guid: 50e2c889931b69743b30fe0ecfb50c12, type: 2}
     - target: {fileID: 3721506842026859761, guid: 93d8fa11cdfddd64c85484bb2032c75f,
         type: 3}
       propertyPath: m_Name
