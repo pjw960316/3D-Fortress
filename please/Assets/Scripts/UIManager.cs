@@ -75,4 +75,9 @@ public class UIManager : MonoBehaviour
             power_gauge.value -= 1;
         }      
     }
+
+    public void EnableCrossHair(bool enabled){
+        crossHair.enabled = enabled;
+    }
+
 }

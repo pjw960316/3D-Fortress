@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
 
     private bool isPlayerShoot;
     private int remainTime;
+
+    private int totalTime;
+
     public static GameManager Instance  
     {
         get
@@ -45,21 +48,28 @@ public class GameManager : MonoBehaviour
     private static HashSet<int> can_allocate_plane;
     public float obstacle_3_max_ht;
 
+    private IEnumerator timercoroutine;
+
+
     private void Awake()
     {
         if (Instance != this) Destroy(gameObject);
 
         
-        Reset();
+        
     }
 
     private void Start()
     {
+        totalTime = 20;
+
         can_allocate_plane = new HashSet<int>(); //내가 알기로는 C#은 메모리 해제를 g.c가 알아서 해줌...
         for (int i = 0; i < 100; i++)
         {
             can_allocate_plane.Add(i);
         }           
+
+        Reset();
     }
     
     private void Reset(){
@@ -67,12 +77,14 @@ public class GameManager : MonoBehaviour
         playerShooter1.isFired = false;
         playerShooter2.isFired = false;
 
+        remainTime = totalTime;
 
-        remainTime = 60;
-    
+        timercoroutine = Timer(remainTime);
 
         playerInput1.enabled = playerTurn;
         playerInput2.enabled = !playerTurn;
+
+        UIManager.Instance.power_gauge.value = 0f;
 
         //반대 진영의 장애물 전체 삭제
         if (playerTurn == true)
@@ -118,11 +130,16 @@ public class GameManager : MonoBehaviour
         }        
     }
     IEnumerator RoundRoutine(){
-        StartCoroutine(Timer());
-        UIManager.Instance.SetAnnounceText(playerTurn + "의 턴");
+        StartCoroutine(timercoroutine);
+        if(playerTurn){
+            UIManager.Instance.SetAnnounceText("Player1의 턴");
+        }else{
+            UIManager.Instance.SetAnnounceText("Player2의 턴");
+        }
+        
 
         
-            CameraManager.Instance.FollowPlayer(playerTurn);
+        CameraManager.Instance.FollowPlayer(playerTurn);
             
         //카메라 시점 현재 플레이어 따라가도록 설정
 
@@ -132,12 +149,18 @@ public class GameManager : MonoBehaviour
         if(playerTurn){
             
             while(!playerShooter1.isFired){
+                if(remainTime <= 3){
+                    playerShooter1.isFired = true;
+                }
                 yield return null;
             }
             
         }else{
             
             while(!playerShooter2.isFired){
+                if(remainTime <= 3){
+                    playerShooter2.isFired = true;
+                }
                 yield return null;
             }
            
@@ -145,12 +168,13 @@ public class GameManager : MonoBehaviour
         
         
         ball = GameObject.FindWithTag("Ball");
-        //Debug.Log(ball);
 
         CameraManager.Instance.FollowBall();
-        
+
         playerInput1.enabled = false;
         playerInput2.enabled = false;
+
+        UIManager.Instance.EnableCrossHair(false);
 
         while(true){
             if(ball == null)
@@ -159,11 +183,15 @@ public class GameManager : MonoBehaviour
         }
 
         
+        UIManager.Instance.EnableCrossHair(true);
+
+        StopCoroutine(timercoroutine);
+        timercoroutine = Timer(3);
+        StartCoroutine(timercoroutine);
 
         CameraManager.Instance.FollowPlayer(playerTurn);
         playerInput1.enabled = playerTurn;
         playerInput2.enabled = !playerTurn;
-        remainTime = 3;
 
         yield return new WaitForSeconds(3f);
 
@@ -179,6 +207,7 @@ public class GameManager : MonoBehaviour
         // 가해진 힘의 세기에 비례해서 플레이어의 체력을 깎기, player에 붙어있는 applyDamage(int damage)함수 발동시켜서 체력 깎기
 
         // 다시 내 플레이어 시점으로 카메라 이동, remainTime 3초로 줄임 
+        StopCoroutine(timercoroutine);
         Reset();
     }
 
@@ -289,14 +318,12 @@ public class GameManager : MonoBehaviour
     }
 
 
-    IEnumerator Timer(){
+    IEnumerator Timer(int remain){
+        remainTime = remain;
         while(remainTime > 0){
             UIManager.Instance.UpdateTimeText(remainTime);
-            remainTime -= 1;
-            if(remainTime == 0){
-                break;
-            }
             yield return new WaitForSeconds(1f);
+            remainTime -= 1;
         }
         
     }
