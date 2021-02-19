@@ -46,7 +46,7 @@ public class PlayerInput : MonoBehaviour
         moveInput = new Vector2(Input.GetAxis(moveHorizontalAxisName), Input.GetAxis(moveVerticalAxisName));
         if (moveInput.sqrMagnitude > 1) moveInput = moveInput.normalized;
 
-        jump = Input.GetButtonDown(jumpButtonName);
+        jump = Input.GetButton(jumpButtonName);
         
         isfiredown = Input.GetButtonDown(fireButtonName);
         isfire = Input.GetButton(fireButtonName);                
