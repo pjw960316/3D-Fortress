@@ -26,7 +26,7 @@ public class PlayerInput : MonoBehaviour
        
     private void Start()
     {
-        cur_weapon_cnt = 3; // 현재 무기를 3개 먹었다고 가정.
+        cur_weapon_cnt = 4; // 현재 무기를 4개 먹었다고 가정.
         cur_weapon_number = 1; 
     }
 
