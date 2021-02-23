@@ -20,13 +20,16 @@ public class FollowBall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if(ball == null){
-            ball = GameObject.FindWithTag("Ball");
+            ball = GameObject.FindWithTag("Missile");
+
             if(ball != null){
                 ballTransform = ball.transform;
                 virtualCamera.LookAt = ballTransform;
-                virtualCamera.Follow = ballTransform;
+                
             }
         }
+        
     }
 }
