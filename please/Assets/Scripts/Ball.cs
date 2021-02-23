@@ -9,27 +9,28 @@ public class Ball : MonoBehaviour
 
     public float explosionRadius = 5f;
 
+    public HashSet<string> damaged;
+    
     public float maxDamage = 50f;
     public float explosionForce = 100f;
     public LayerMask isPlayer;
     // Start is called before the first frame update
     void Start()
     {
-        
+        damaged = new HashSet<string>();
     }
 
    
-    private void OnTriggerEnter(Collider other){
+    private void OnTriggerEnter(Collider other){ 
         Debug.Log("other:" + other.name);
         Destroy(gameObject);
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, isPlayer);
 
 
-        HashSet<string> damaged = new HashSet<string>();
-
         for(int i=0; i< colliders.Length; i++){
 
             if (!damaged.Contains(colliders[i].name)){
+
                 damaged.Add(colliders[i].name);
                 PlayerMovement target = colliders[i].GetComponent<PlayerMovement>();
 
@@ -45,8 +46,6 @@ public class Ball : MonoBehaviour
                 
                 PlayerHealth playerHealth = colliders[i].GetComponent<PlayerHealth>();
 
-                
-
                 float damage = ((explosionRadius - distance) / explosionRadius) * maxDamage;
 
                 damage = Mathf.Max(damage, 0);
@@ -54,6 +53,7 @@ public class Ball : MonoBehaviour
                 Debug.Log("Damage:" + damage);
                 Debug.Log(colliders[i].name);
                 Debug.Log(colliders.Length);
+
                 playerHealth.ApplyDamage((int)damage);
             }else{
                 continue;
