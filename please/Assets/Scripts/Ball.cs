@@ -9,20 +9,37 @@ public class Ball : MonoBehaviour
 
     public float explosionRadius = 5f;
 
+    Rigidbody rigidbody;
+
     public HashSet<string> damaged;
     
+    public Quaternion prevRotation;
+    public float angle;
     public float maxDamage = 50f;
     public float explosionForce = 100f;
+
+    private Vector3 prevPosition;
     public LayerMask isPlayer;
     // Start is called before the first frame update
+
+    public Vector3 startRotation;
     void Start()
     {
+        angle = transform.rotation.eulerAngles.x;
         damaged = new HashSet<string>();
+        prevRotation = transform.rotation;
+        rigidbody = GetComponent<Rigidbody>();
     }
 
+    void FixedUpdate(){
+        Vector3 deltaPos = transform.position - prevPosition;
+        float angle = Mathf.Atan2(rigidbody.velocity.y, rigidbody.velocity.z) * Mathf.Rad2Deg;
+
+        transform.eulerAngles = new Vector3(-angle, 0, 0);
+    }
    
     private void OnTriggerEnter(Collider other){ 
-        Debug.Log("other:" + other.name);
+        //Debug.Log("other:" + other.name);
         Destroy(gameObject);
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, isPlayer);
 
@@ -50,9 +67,9 @@ public class Ball : MonoBehaviour
 
                 damage = Mathf.Max(damage, 0);
 
-                Debug.Log("Damage:" + damage);
-                Debug.Log(colliders[i].name);
-                Debug.Log(colliders.Length);
+                // Debug.Log("Damage:" + damage);
+                // Debug.Log(colliders[i].name);
+                // Debug.Log(colliders.Length);
 
                 playerHealth.ApplyDamage((int)damage);
             }else{

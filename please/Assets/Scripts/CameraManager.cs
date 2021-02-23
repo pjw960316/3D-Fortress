@@ -10,6 +10,7 @@ public class CameraManager : MonoBehaviour
     public GameObject playerCam1;
     public GameObject playerCam2;
 
+    public GameObject missileCam;
     public static CameraManager Instance{
         get{
             if(instance == null){
@@ -22,10 +23,12 @@ public class CameraManager : MonoBehaviour
     public void FollowPlayer(bool turn){
         playerCam1.SetActive(turn);
         playerCam2.SetActive(!turn);
+        missileCam.SetActive(false);
     }
 
     public void FollowBall(){
         playerCam1.SetActive(false);
         playerCam2.SetActive(false);
+        missileCam.SetActive(true);
     }
 }

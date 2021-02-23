@@ -55,9 +55,11 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        //playerTurn = true;
         totalTime = 20;
         isGameOver = false;
         can_allocate_plane = new HashSet<int>(); //내가 알기로는 C#은 메모리 해제를 g.c가 알아서 해줌...
+        CameraManager.Instance.FollowPlayer(playerTurn);
         for (int i = 0; i < 100; i++)
         {
             can_allocate_plane.Add(i);
@@ -158,7 +160,7 @@ public class GameManager : MonoBehaviour
         }
         
         
-        ball = GameObject.FindWithTag("Ball");
+        ball = GameObject.FindWithTag("Missile");
 
         CameraManager.Instance.FollowBall();
 
@@ -173,6 +175,7 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
         yield return new WaitForSeconds(1f);
+
         if(isGameOver){
             yield return new WaitForSeconds(3f);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);

@@ -9,6 +9,7 @@ TagManager:
   - FrontMapObstacle
   - BackMapObstacle
   - GuidedMissile
+  - Missile
   layers:
   - Default
   - TransparentFX

@@ -57,7 +57,7 @@ public class PlayerShooter : MonoBehaviour
     private void UseWeapon1() //일단은 기본무기로 민현이 코드 유지.
     {
         Debug.Log("Weapon_1 Fire !!!");
-        Rigidbody ballInstance = Instantiate(ball_rigid, playerCamera.transform.position + playerCamera.transform.forward * 4f, Quaternion.Euler(Vector3.zero)); // 하늘을 보고 쐈을때 공 생성위치가 바닥 아래에서 생성되는것 방지
+        Rigidbody ballInstance = Instantiate(ball_rigid, playerCamera.transform.position + playerCamera.transform.forward * 4f, playerCamera.transform.rotation); // 하늘을 보고 쐈을때 공 생성위치가 바닥 아래에서 생성되는것 방지
         ballInstance.velocity = fireForce * playerCamera.transform.forward;        
         Destroy(ballInstance.gameObject, destroyTime);
     }
