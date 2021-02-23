@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using Cinemachine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     public bool playerTurn;
 
+    
     private GameObject ball;
     public PlayerInput playerInput1;
     public PlayerInput playerInput2;
@@ -17,12 +17,12 @@ public class GameManager : MonoBehaviour
     public PlayerShooter playerShooter2;
 
     public PlayerMovement playerMovement1;
-
     public PlayerMovement playerMovement2;
 
     private bool isPlayerShoot;
     private int remainTime;
 
+    public bool isGameOver;
     private int totalTime;
 
     public static GameManager Instance  
@@ -37,7 +37,6 @@ public class GameManager : MonoBehaviour
 
     
     private int score;
-    public bool isGameover { get; private set; }
 
     private float time_span = 0f;
     public float spawn_time_limit;
@@ -50,19 +49,14 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator timercoroutine;
 
-
     private void Awake()
     {
         if (Instance != this) Destroy(gameObject);
-
-        
-        
     }
-
     private void Start()
     {
         totalTime = 20;
-
+        isGameOver = false;
         can_allocate_plane = new HashSet<int>(); //내가 알기로는 C#은 메모리 해제를 g.c가 알아서 해줌...
         for (int i = 0; i < 100; i++)
         {
@@ -73,6 +67,7 @@ public class GameManager : MonoBehaviour
     }
     
     private void Reset(){
+        UIManager.Instance.winText.gameObject.SetActive(false);
         playerTurn = !playerTurn;
         playerShooter1.isFired = false;
         playerShooter2.isFired = false;
@@ -137,8 +132,6 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.SetAnnounceText("Player2의 턴");
         }
         
-
-        
         CameraManager.Instance.FollowPlayer(playerTurn);
             
         //카메라 시점 현재 플레이어 따라가도록 설정
@@ -146,8 +139,7 @@ public class GameManager : MonoBehaviour
         // 마우스 우측키 누르고 있는동안 파워 슬라이드 게이지 왔다갔다 // private enum State pushdown push up 으로 구분? 
         // 다른 ball shooter 스크립트 만들어서 따로 구현?
         
-        if(playerTurn){
-            
+        if(playerTurn){            
             while(!playerShooter1.isFired){
                 if(remainTime <= 3){
                     playerShooter1.isFired = true;
@@ -156,7 +148,6 @@ public class GameManager : MonoBehaviour
             }
             
         }else{
-            
             while(!playerShooter2.isFired){
                 if(remainTime <= 3){
                     playerShooter2.isFired = true;
@@ -181,10 +172,16 @@ public class GameManager : MonoBehaviour
                 break;
             yield return null;
         }
+        yield return new WaitForSeconds(1f);
+        if(isGameOver){
+            yield return new WaitForSeconds(3f);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            yield break;
+        }
 
-        
         UIManager.Instance.EnableCrossHair(true);
 
+        
         StopCoroutine(timercoroutine);
         timercoroutine = Timer(3);
         StartCoroutine(timercoroutine);
@@ -317,14 +314,29 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    IEnumerator Timer(int remain){
+    IEnumerator Timer(int remain){ 
         remainTime = remain;
         while(remainTime > 0){
             UIManager.Instance.UpdateTimeText(remainTime);
             yield return new WaitForSeconds(1f);
             remainTime -= 1;
         }
+        
+    }
+
+    public void Die(string playerName){
+        Debug.Log("PlayerName:" + playerName);
+        isGameOver = true;
+
+        GameObject player = GameObject.Find(playerName);
+        Destroy(player);
+
+        if(playerName == "player1"){
+            UIManager.Instance.EnalbeWinText("player2", true);
+        }else{
+            UIManager.Instance.EnalbeWinText("player1", true);
+        }
+        
         
     }
 }

@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     
     public Slider hpBar;
 
+    public Text winText;
 
     public Image crossHair;
     public Text remainTimeText;
@@ -78,6 +79,14 @@ public class UIManager : MonoBehaviour
 
     public void EnableCrossHair(bool enabled){
         crossHair.enabled = enabled;
+    }
+
+    public void EnalbeWinText(string player, bool enabled){
+        winText.gameObject.SetActive(true);
+        if(player == "player1"){
+            
+        }
+        winText.text = player + " WIN!!!";
     }
 
 }

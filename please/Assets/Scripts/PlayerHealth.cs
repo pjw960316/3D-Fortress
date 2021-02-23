@@ -8,9 +8,10 @@ public class PlayerHealth : MonoBehaviour
     // Start is called before the first frame update
     public int player_decreased_hp;
 
+    public bool isDead;
     public Slider hpBar;
     public Text hpText;
-    public int maxHealth = 100;
+    public int maxHealth = 10;
 
     public int curHelath;
 
@@ -19,18 +20,22 @@ public class PlayerHealth : MonoBehaviour
     private void Start()
     {
         hpBar.value = maxHealth;
-
+        isDead = false;
         curHelath = maxHealth;
     }
 
     public void ApplyDamage(int damage){
         // player_decreased_hp += damage;
         // UIManager.Instance.UpdateHpBar(player_decreased_hp);
-        Debug.Log("Damage:" + damage);
+        //Debug.Log("Damage:" + damage);
         //Debug.Log("cur:" + curHelath);
         curHelath -= damage;
         hpBar.value = curHelath;
         hpText.text = curHelath.ToString();
+
+        if(curHelath <= 0){
+            GameManager.Instance.Die(gameObject.name);
+        }
     }
 
     public void GetPotion(int healing) 

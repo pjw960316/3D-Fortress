@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionRadius: 5
-  maxDamage: 50
+  maxDamage: 150
   explosionForce: 50
   isPlayer:
     serializedVersion: 2
