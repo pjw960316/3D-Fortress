@@ -243,20 +243,20 @@ public class GameManager : MonoBehaviour
             if (playerTurn == false && (rand_zero_to_four == 0 || rand_zero_to_four == 2))
             {
                 spawned_object.tag = "BackMapObstacle";
-            }
-            //Debug.Log(playerTurn + "count " + can_allocate_plane.Count);
+            }            
         }
         else
         {
             return;
         }
         
+        // Trap 과 Potion은 Item.cs에서 구현
 
         if (rand_zero_to_four == 1) //Bomb
         {
             cur_bomb_transform = spawned_object.transform;
-            spawned_object.transform.position += new Vector3(0, 0.5f, 0);
-            spawned_object.transform.localScale = new Vector3(1, 1, 1);
+            spawned_object.transform.position += new Vector3(0, 0.45f, 0);
+            spawned_object.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
             spawned_object.GetComponent<Renderer>().material.color = Color.red;
             //TODO : 정확한 시간 계산이 필요함.
             StartCoroutine("ChangeBombColor", spawned_object); //2.7초 진행
@@ -312,7 +312,8 @@ public class GameManager : MonoBehaviour
             {
                 yield break;
             }
-            spawned_object.transform.localScale += new Vector3(0, 0.2f, 0);
+            spawned_object.transform.localScale += new Vector3(0, 0.1f, 0);
+            spawned_object.transform.position += new Vector3(0, 0.1f, 0);
             yield return new WaitForSeconds(0.3f);
         }
     }

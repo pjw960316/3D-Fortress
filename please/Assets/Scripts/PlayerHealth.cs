@@ -40,10 +40,6 @@ public class PlayerHealth : MonoBehaviour
 
     public void GetPotion(int healing) 
     {
-
-        //player_decreased_hp -= healing;
-        //UIManager.Instance.UpdateHpBar(player_decreased_hp);
-
         hpBar.value += healing;
     }
 
