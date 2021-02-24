@@ -594,7 +594,7 @@ GameObject:
   - component: {fileID: 3721506842026859663}
   m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -765,8 +765,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player_decreased_hp: 0
+  isDead: 0
   hpBar: {fileID: 900976217}
+  hpText: {fileID: 0}
   maxHealth: 100
+  curHelath: 0
 --- !u!114 &3721506842026859663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -780,5 +783,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFired: 0
+  ball_rigid: {fileID: 0}
   ball: {fileID: 1626556523034113163, guid: e0d6dd87dc79a3245a089bf7d7424df8, type: 3}
   destroyTime: 5
