@@ -25,22 +25,23 @@ public class PlayerHealth : MonoBehaviour
     }
 
     public void ApplyDamage(int damage){
-        // player_decreased_hp += damage;
-        // UIManager.Instance.UpdateHpBar(player_decreased_hp);
-        //Debug.Log("Damage:" + damage);
-        //Debug.Log("cur:" + curHelath);
         curHelath -= damage;
         hpBar.value = curHelath;
         hpText.text = curHelath.ToString();
 
         if(curHelath <= 0){
-            GameManager.Instance.Die(gameObject.name);
+            StartCoroutine(GameManager.Instance.Die(gameObject.name));
         }
     }
 
     public void GetPotion(int healing) 
     {
-        hpBar.value += healing;
+        curHelath += healing;
+        if(curHelath > 100){
+            curHelath = 100;
+        }
+        hpBar.value = curHelath;
+        hpText.text = curHelath.ToString();
     }
 
 }

@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     private int remainTime;
 
     public bool isGameOver;
-    private int totalTime;
+    public int totalTime;
 
     public static GameManager Instance  
     {
@@ -55,8 +55,6 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        //playerTurn = true;
-        totalTime = 20;
         isGameOver = false;
         can_allocate_plane = new HashSet<int>(); //내가 알기로는 C#은 메모리 해제를 g.c가 알아서 해줌...
         CameraManager.Instance.FollowPlayer(playerTurn);
@@ -77,9 +75,13 @@ public class GameManager : MonoBehaviour
         remainTime = totalTime;
 
         timercoroutine = Timer(remainTime);
+        
+        if(playerInput1 != null && playerInput2 != null){
+            playerInput1.enabled = playerTurn;
+            playerInput2.enabled = !playerTurn;
+        }else{
 
-        playerInput1.enabled = playerTurn;
-        playerInput2.enabled = !playerTurn;
+        }
 
         UIManager.Instance.power_gauge.value = 0f;
 
@@ -156,13 +158,15 @@ public class GameManager : MonoBehaviour
                 }
                 yield return null;
             }
-           
+            
         }
         
-        
-        ball = GameObject.FindWithTag("Missile");
+        if(remainTime > 3){
+            CameraManager.Instance.FollowBall();
+        }
 
-        CameraManager.Instance.FollowBall();
+        ball = GameObject.FindWithTag("Missile");
+        
 
         playerInput1.enabled = false;
         playerInput2.enabled = false;
@@ -176,37 +180,23 @@ public class GameManager : MonoBehaviour
         }
         yield return new WaitForSeconds(1f);
 
-        if(isGameOver){
-            yield return new WaitForSeconds(3f);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            yield break;
-        }
-
         UIManager.Instance.EnableCrossHair(true);
 
-        
+        if(isGameOver){
+            yield return new WaitForSeconds(10f); // 게임 재시작은 Die 코루틴에서 구현하도록 하기위해 die 코루틴에서 재시작 될때까지 무한정 대기
+        }
         StopCoroutine(timercoroutine);
         timercoroutine = Timer(3);
         StartCoroutine(timercoroutine);
 
         CameraManager.Instance.FollowPlayer(playerTurn);
-        playerInput1.enabled = playerTurn;
-        playerInput2.enabled = !playerTurn;
+        if(playerInput1 != null && playerInput2 != null){
+            playerInput1.enabled = playerTurn;
+            playerInput2.enabled = !playerTurn;
+        }
 
         yield return new WaitForSeconds(3f);
 
-
-        // 1초마다 남은시간 ui update 해줘야 함
-
-        // 마우스 떼면 포탄에 화면 가운데에 있는 크로스헤어 방향으로 슬라이더 게이지 value의 힘으로 ball 게임오브젝트 발사
-        // 플레이어를 바라보고 있던 카메라가 포탄을 부드럽게 추적
-
-        // ball 게임오브젝트에는 스크립트 달고 OnTriggerEnter로 땅이나 상대 플레이어 닿으면 Physics.OverlapSphere로 범위 안에서 
-        // Player가 있다면 AddExplosionForce 함수로 폭발력 가하기 (ball.cs) 
-
-        // 가해진 힘의 세기에 비례해서 플레이어의 체력을 깎기, player에 붙어있는 applyDamage(int damage)함수 발동시켜서 체력 깎기
-
-        // 다시 내 플레이어 시점으로 카메라 이동, remainTime 3초로 줄임 
         StopCoroutine(timercoroutine);
         Reset();
     }
@@ -328,18 +318,22 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void Die(string playerName){
+    public IEnumerator Die(string playerName){
         Debug.Log("PlayerName:" + playerName);
         isGameOver = true;
 
         GameObject player = GameObject.Find(playerName);
         Destroy(player);
 
-        if(playerName == "player1"){
+        if(playerName.Equals("Player1")){
             UIManager.Instance.EnalbeWinText("player2", true);
         }else{
             UIManager.Instance.EnalbeWinText("player1", true);
         }
+
+        yield return new WaitForSeconds(3f);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         
         
     }
