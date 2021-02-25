@@ -22,12 +22,11 @@ public class PlayerShooter : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(playerInput.isfireup && !isFired){
-            fireForce = UIManager.Instance.powerSlide.value * 0.3f;
-            //Debug.Log(UIManager.Instance.powerSlide.value);
+        if(playerInput.isfireup && !isFired && GameManager.Instance.is_game_paused == false) //게임이 일시정지면 발사 X
+        {
+            fireForce = UIManager.Instance.powerSlide.value * 0.3f;    
             Fire();            
         }
     }
@@ -56,7 +55,7 @@ public class PlayerShooter : MonoBehaviour
 
     private void UseWeapon1() //일단은 기본무기로 민현이 코드 유지.
     {
-        Debug.Log("Weapon_1 Fire !!!");
+        //Debug.Log("Weapon_1 Fire !!!");
         Rigidbody ballInstance = Instantiate(ball_rigid, playerCamera.transform.position + playerCamera.transform.forward * 4f, playerCamera.transform.rotation); // 하늘을 보고 쐈을때 공 생성위치가 바닥 아래에서 생성되는것 방지
         ballInstance.velocity = fireForce * playerCamera.transform.forward;        
         Destroy(ballInstance.gameObject, destroyTime);
@@ -64,7 +63,7 @@ public class PlayerShooter : MonoBehaviour
 
     private void UseWeapon2() //색상 변경 총알
     {
-        Debug.Log("Weapon_2 Fire !!!");
+        //Debug.Log("Weapon_2 Fire !!!");
         GameObject ball_instance = Instantiate(ball, playerCamera.transform.position, Quaternion.Euler(Vector3.zero));
         ball_instance.GetComponent<Rigidbody>().velocity = fireForce * playerCamera.transform.forward;
         ball_instance.GetComponent<Renderer>().material.color = Color.red;       
@@ -73,7 +72,7 @@ public class PlayerShooter : MonoBehaviour
 
     private void UseWeapon3() // 3발 사격
     {
-        Debug.Log("Weapon_3 Fire !!!");
+        //Debug.Log("Weapon_3 Fire !!!");
         GameObject[] ball_instance = new GameObject[SHOTGUN_BULLET_CNT];
         for (int i = 0; i < SHOTGUN_BULLET_CNT; i++)
         {
@@ -87,7 +86,7 @@ public class PlayerShooter : MonoBehaviour
     }
     private void UseWeapon4() // 유도탄 // TODO : 아직 유도탄의 Destroy()시점을 명확하게 못해서 구현 X
     {
-        Debug.Log("Weapon_4 Fire !!!");
+        //Debug.Log("Weapon_4 Fire !!!");
         GameObject ball_instance = Instantiate(ball, playerCamera.transform.position, Quaternion.Euler(Vector3.zero));
         ball_instance.GetComponent<Rigidbody>().velocity = fireForce * playerCamera.transform.forward;
         ball_instance.tag = "GuidedMissile";

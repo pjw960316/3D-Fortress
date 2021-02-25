@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     private int remainTime;
 
     public bool isGameOver;
+    public bool is_game_paused;
     public int totalTime;
 
     public static GameManager Instance  
@@ -56,6 +57,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         isGameOver = false;
+        is_game_paused = false;
         can_allocate_plane = new HashSet<int>(); //내가 알기로는 C#은 메모리 해제를 g.c가 알아서 해줌...
         CameraManager.Instance.FollowPlayer(playerTurn);
         for (int i = 0; i < 100; i++)
@@ -114,6 +116,16 @@ public class GameManager : MonoBehaviour
         
     }
 
+    private void Update() 
+    {
+        if (Input.GetKeyDown(KeyCode.Escape)) //fixed에 넣으면 감지 잘 못함.
+        {
+            Time.timeScale = 0;
+            is_game_paused = true;
+            UIManager.Instance.pause_screen.gameObject.SetActive(true);
+            UIManager.Instance.menu.gameObject.SetActive(true);
+        }
+    }
     //파워 슬라이드의 코루틴 사용에 대해 이야기가 필요할 것 같아서 일단 하던 방식으로 구현함
     private void FixedUpdate()
     {
@@ -126,8 +138,10 @@ public class GameManager : MonoBehaviour
         if(playerInput1.isfire || playerInput2.isfire)
         {
             UIManager.Instance.MovePowerGage();
-        }        
+        }      
+        
     }
+    
     IEnumerator RoundRoutine(){
         StartCoroutine(timercoroutine);
         if(playerTurn){
@@ -200,9 +214,7 @@ public class GameManager : MonoBehaviour
         StopCoroutine(timercoroutine);
         Reset();
     }
-
-    
-
+        
     private void SpawnItems()
     {
         if (playerTurn == true)
@@ -333,8 +345,34 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        
-        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);        
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1;
+        UIManager.Instance.pause_screen.gameObject.SetActive(false);
+        UIManager.Instance.menu.gameObject.SetActive(false);
+        Invoke("CancleGamePause", 1f);
+    }
+
+    //TODO : 빌드시에 코드 변경
+    public void EndGame() 
+    {
+        Debug.Log("빌드 해야 기능이 작동하므로 일단은 Restart로 대체");
+        Time.timeScale = 1;
+        UIManager.Instance.pause_screen.gameObject.SetActive(false);
+        UIManager.Instance.menu.gameObject.SetActive(false);
+        Invoke("CancleGamePause", 1f);
+    }
+
+    /*
+     * 게임이 재시작 되어 바로 발사가 가능해지면 재시작 버튼을 누름과 동시에 게임이 재시작 된 것을 인식하여
+     * 마우스 클릭으로 발사 되는 탄환도 발사되는 오류가 발생
+     * 그러므로 1초의 여유 시간을 주기 위해 Invoke로 아래의 method 호출
+     * */
+    private void CancleGamePause() 
+    {
+        is_game_paused = false;
     }
 }
