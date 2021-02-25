@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
         isGameOver = false;
         is_game_paused = false;
         can_allocate_plane = new HashSet<int>(); //내가 알기로는 C#은 메모리 해제를 g.c가 알아서 해줌...
-        CameraManager.Instance.FollowPlayer(playerTurn);
+        //CameraManager.Instance.FollowPlayer(playerTurn);
         for (int i = 0; i < 100; i++)
         {
             can_allocate_plane.Add(i);
@@ -78,11 +78,11 @@ public class GameManager : MonoBehaviour
 
         timercoroutine = Timer(remainTime);
         
-        if(playerInput1 != null && playerInput2 != null){
+        if(playerInput1 == null || playerInput2 == null){
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);   // 한 플레이어가 없어졌다면 게임이 끝난 것이므로 씬을 다시 로드
+        }else{
             playerInput1.enabled = playerTurn;
             playerInput2.enabled = !playerTurn;
-        }else{
-
         }
 
         UIManager.Instance.power_gauge.value = 0f;
@@ -135,15 +135,30 @@ public class GameManager : MonoBehaviour
             SpawnItems();
             time_span = 0f;
         }
-        if(playerInput1.isfire || playerInput2.isfire)
-        {
-            UIManager.Instance.MovePowerGage();
-        }      
+        // if(playerInput1.isfire || playerInput2.isfire)
+        // {
+        //     if(playerTurn && !playerShooter1.isFired){
+        //         UIManager.Instance.MovePowerGage();
+        //     }
+            
+        // }      
+
+        if(playerTurn){
+            if(playerInput1.isfire && !playerShooter1.isFired){
+                UIManager.Instance.MovePowerGage();
+            }
+        }else{
+            if(playerInput2.isfire && !playerShooter2.isFired){
+                UIManager.Instance.MovePowerGage();
+            }
+        }
         
     }
     
     IEnumerator RoundRoutine(){
         StartCoroutine(timercoroutine);
+
+        
         if(playerTurn){
             UIManager.Instance.SetAnnounceText("Player1의 턴");
         }else{
@@ -196,9 +211,6 @@ public class GameManager : MonoBehaviour
 
         UIManager.Instance.EnableCrossHair(true);
 
-        if(isGameOver){
-            yield return new WaitForSeconds(10f); // 게임 재시작은 Die 코루틴에서 구현하도록 하기위해 die 코루틴에서 재시작 될때까지 무한정 대기
-        }
         StopCoroutine(timercoroutine);
         timercoroutine = Timer(3);
         StartCoroutine(timercoroutine);
@@ -345,7 +357,10 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);   
+
+        
+   
     }
 
     public void RestartGame()
