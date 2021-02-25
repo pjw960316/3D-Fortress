@@ -5,18 +5,19 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    
-    public Slider powerSlide;
-    
-    public Slider hpBar;
-
-    public Text winText;
-
     public Image crossHair;
+    public Image pause_screen;
+    public Image menu;
+
+    public Slider powerSlide;    
+    public Slider hpBar;
+    public Slider power_gauge;
+
+    public Text winText;  
     public Text remainTimeText;
     public Text announceText;
-
-    public Slider power_gauge;
+    public Text player_weapon_number;
+        
     private bool power_gauge_is_up = true;
 
     private static UIManager instance;
@@ -29,7 +30,6 @@ public class UIManager : MonoBehaviour
             return instance;
         }
     }
-
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +52,10 @@ public class UIManager : MonoBehaviour
         hpBar.value = value;
     }
 
+    public void UpdateWeaponNumber(int weapon_number)
+    {
+        player_weapon_number.text = "Weapon Number : " + weapon_number;
+    }
 
     public void MovePowerGage()
     {
