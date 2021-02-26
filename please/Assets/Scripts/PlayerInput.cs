@@ -34,16 +34,6 @@ public class PlayerInput : MonoBehaviour
     // 매프레임 사용자 입력을 감지
     private void Update()
     {
-        //게임오버 상태에서는 사용자 입력을 감지하지 않는다
-        // if (GameManager.Instance != null
-        //     && GameManager.Instance.isGameover)
-        // {
-        //     moveInput = Vector2.zero;
-        //     isfiredown = false;
-        //     jump = false;
-        //     return;
-        // }
-
         moveInput = new Vector2(Input.GetAxis(moveHorizontalAxisName), Input.GetAxis(moveVerticalAxisName));
         if (moveInput.sqrMagnitude > 1) moveInput = moveInput.normalized;
 
