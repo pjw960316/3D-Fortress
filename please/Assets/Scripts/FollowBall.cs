@@ -18,7 +18,7 @@ public class FollowBall : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void Update() // missile은 게임 중간에 만들어지는 것이므로 추적할 미사일 프리팹을 찾아줘야 한다.
     {
         
         if(ball == null){

@@ -31,18 +31,16 @@ public class Ball : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
     }
 
-    void FixedUpdate(){
-        Vector3 deltaPos = transform.position - prevPosition;
-        float angle = Mathf.Atan2(rigidbody.velocity.y, rigidbody.velocity.z) * Mathf.Rad2Deg;
+    void FixedUpdate(){ // 미사일의 속도에 따른 미사일 회전 상태 구현
 
-        transform.eulerAngles = new Vector3(-angle, 0, 0);
+        float angle1 = Mathf.Atan2(rigidbody.velocity.y, rigidbody.velocity.z) * Mathf.Rad2Deg; 
+        float angle2 = Mathf.Atan2(rigidbody.velocity.y, rigidbody.velocity.x) * Mathf.Rad2Deg;
+        transform.eulerAngles = new Vector3(-angle1, 0, -angle2);
     }
    
     private void OnTriggerEnter(Collider other){ 
-        //Debug.Log("other:" + other.name);
         Destroy(gameObject);
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, isPlayer);
-
 
         for(int i=0; i< colliders.Length; i++){
 
@@ -55,21 +53,17 @@ public class Ball : MonoBehaviour
 
                 float distance = vectordiff.magnitude;
                 
-                target.hitforce = ((explosionRadius - distance) / explosionRadius) * explosionForce;
-                target.hitvector = target.transform.position - transform.position;
-                target.hitradius = explosionRadius;
+                target.hitforce = ((explosionRadius - distance) / explosionRadius) * explosionForce; 
+                target.hitvector = target.transform.position - transform.position; 
+                target.hitradius = explosionRadius; 
                 target.isHit = true;
-
+                // playermovement의 addExplosionForce 함수에서 물체를 얼마만큼 이동시킬지 계산하기 위해 target에 할당해줌
                 
                 PlayerHealth playerHealth = colliders[i].GetComponent<PlayerHealth>();
 
                 float damage = ((explosionRadius - distance) / explosionRadius) * maxDamage;
 
                 damage = Mathf.Max(damage, 0);
-
-                // Debug.Log("Damage:" + damage);
-                // Debug.Log(colliders[i].name);
-                // Debug.Log(colliders.Length);
 
                 playerHealth.ApplyDamage((int)damage);
             }else{

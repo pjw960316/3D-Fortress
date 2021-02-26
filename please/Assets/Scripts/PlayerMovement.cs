@@ -52,17 +52,17 @@ public class PlayerMovement : MonoBehaviour
 
         if (is_player_stunned == false && playerInput.enabled)
         {
-            Move(playerInput.moveInput);
+            Move(playerInput.moveInput); 
         }
         
-        if (playerInput.jump) 
-            Jump();
+        if (playerInput.jump && characterController.isGrounded) 
+            Jump(); // y 양의 방향으로 속도를 줌
 
         if(isHit){
-            AddExplosionForce();
+            AddExplosionForce(); // isHit이 true인 동안 폭발력에 의해 밀려나는 움직임 구현
         }
 
-        if(!playerInput.enabled && !characterController.isGrounded){
+        if(!playerInput.enabled){ // 플레이어가 움직일수 없는 상태면 상하좌우로 움직일 수 없음
             Move(Vector3.zero);
         }
     }
@@ -98,7 +98,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump()
     {
-        if (!characterController.isGrounded) return;
         currentVelocityY = jumpVelocity;
     }
 
@@ -108,7 +107,6 @@ public class PlayerMovement : MonoBehaviour
         var playerSpeed = Mathf.SmoothDamp(hitforce, 0, ref forceSmoothVelocity, smoothTime);
         hitforce = playerSpeed;
 
-        //Debug.Log(playerSpeed);
         var velocity = hitvector * playerSpeed;
         characterController.Move(velocity * Time.deltaTime);
 
@@ -121,13 +119,11 @@ public class PlayerMovement : MonoBehaviour
       
     public void BecomeInvincible()
     {
-        //Debug.Log("player become invincible");
         gameObject.layer = 9;
         Invoke("CancleInvincible", INVINCIBLE_TIME);
     }
     private void CancleInvincible()
     {
-       // Debug.Log("player become Not_invincible");
         gameObject.layer = 8;
     }
 

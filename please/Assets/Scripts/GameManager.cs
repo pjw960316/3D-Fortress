@@ -135,13 +135,7 @@ public class GameManager : MonoBehaviour
             SpawnItems();
             time_span = 0f;
         }
-        // if(playerInput1.isfire || playerInput2.isfire)
-        // {
-        //     if(playerTurn && !playerShooter1.isFired){
-        //         UIManager.Instance.MovePowerGage();
-        //     }
-            
-        // }      
+          
 
         if(playerTurn){
             if(playerInput1.isfire && !playerShooter1.isFired){
@@ -357,7 +351,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);   
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);   // 재시작
 
         
    

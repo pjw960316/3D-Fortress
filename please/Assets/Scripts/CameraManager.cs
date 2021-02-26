@@ -20,6 +20,10 @@ public class CameraManager : MonoBehaviour
         }
     }
     // Start is called before the first frame update
+
+    //Cinemachine 카메라는 여러대를 켜두고 priority 를 조정하여 가장 높은 priority의 카메라가 메인으로 보이는데 
+    //setactive를 사용하여 직접 꺼주면 살아있는 카메라중 가장 우선순위가 높은 카메라가 메인이 된다.
+    
     public void FollowPlayer(bool turn){
         playerCam1.SetActive(turn);
         playerCam2.SetActive(!turn);
@@ -31,4 +35,5 @@ public class CameraManager : MonoBehaviour
         playerCam2.SetActive(false);
         missileCam.SetActive(true);
     }
+
 }
