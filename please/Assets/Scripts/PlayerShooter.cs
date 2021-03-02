@@ -10,7 +10,7 @@ public class PlayerShooter : MonoBehaviour
     public GameObject ball;
     private PlayerInput playerInput;
     private Camera playerCamera;
-    public float destroyTime;
+    public float destroyTime;    
     
     private float fireForce;
     private const int SHOTGUN_BULLET_CNT = 3;
@@ -66,7 +66,7 @@ public class PlayerShooter : MonoBehaviour
         //Debug.Log("Weapon_2 Fire !!!");
         GameObject ball_instance = Instantiate(ball, playerCamera.transform.position, Quaternion.Euler(Vector3.zero));
         ball_instance.GetComponent<Rigidbody>().velocity = fireForce * playerCamera.transform.forward;
-        ball_instance.GetComponent<Renderer>().material.color = Color.red;       
+        //ball_instance.GetComponent<Renderer>().material.color = Color.red;       
         Destroy(ball_instance.gameObject, destroyTime);
     }
 
