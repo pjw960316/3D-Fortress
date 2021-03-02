@@ -23,6 +23,8 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
 
     public Vector3 startRotation;
+    private Vector3 wind;
+
     void Start()
     {
         angle = transform.rotation.eulerAngles.x;
@@ -31,11 +33,17 @@ public class Ball : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
     }
 
-    void FixedUpdate(){ // 미사일의 속도에 따른 미사일 회전 상태 구현
+    void FixedUpdate(){
 
+        // 미사일의 속도에 따른 미사일 회전 상태 구현
         float angle1 = Mathf.Atan2(rigidbody.velocity.y, rigidbody.velocity.z) * Mathf.Rad2Deg; 
         float angle2 = Mathf.Atan2(rigidbody.velocity.y, rigidbody.velocity.x) * Mathf.Rad2Deg;
         transform.eulerAngles = new Vector3(-angle1, 0, -angle2);
+
+        // 미사일에 가해지는 바람 구현
+        // addforce는 연속적으로 힘이 가해지므로 가속이 붙음 , 그러므로 position으로 이용합니다.
+        transform.position += WindManager.wind_path;        
+        Debug.Log("미사일 위치 : " + transform.position);
     }
    
     private void OnTriggerEnter(Collider other){ 
