@@ -164,7 +164,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 590384683}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
@@ -767,7 +767,7 @@ MonoBehaviour:
   player_decreased_hp: 0
   isDead: 0
   hpBar: {fileID: 900976217}
-  hpText: {fileID: 0}
+  hpText: {fileID: 641844773}
   maxHealth: 100
   curHelath: 0
 --- !u!114 &3721506842026859663
@@ -783,6 +783,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFired: 0
-  ball_rigid: {fileID: 0}
-  ball: {fileID: 1626556523034113163, guid: e0d6dd87dc79a3245a089bf7d7424df8, type: 3}
+  ball_rigid: {fileID: 2379367991552930127, guid: 1d37014fd411c524db3696bba6ff1d21,
+    type: 3}
+  ball: {fileID: 115386, guid: 1d37014fd411c524db3696bba6ff1d21, type: 3}
   destroyTime: 5
