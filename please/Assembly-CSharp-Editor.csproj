@@ -36,7 +36,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\VSCode\Plugins\Editor\VSCode.cs" />
+     <Compile Include="Assets\unity-chan!\Unity-chan! Model\Editor\CreateLocatorHere.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.18f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -233,7 +233,7 @@
         <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.18f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-        <HintPath>D:/Project/3D-Fortress/please/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
+        <HintPath>D:/Project/3D-Fortress/3D-Fortress/please/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.18f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -590,43 +590,43 @@
         <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.18f1/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.TestRunner">
-        <HintPath>D:/Project/3D-Fortress/please/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+        <HintPath>D:/Project/3D-Fortress/3D-Fortress/please/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TestRunner">
-        <HintPath>D:/Project/3D-Fortress/please/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+        <HintPath>D:/Project/3D-Fortress/3D-Fortress/please/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-        <HintPath>D:/Project/3D-Fortress/please/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+        <HintPath>D:/Project/3D-Fortress/3D-Fortress/please/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Cinemachine">
-        <HintPath>D:/Project/3D-Fortress/please/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+        <HintPath>D:/Project/3D-Fortress/3D-Fortress/please/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-        <HintPath>D:/Project/3D-Fortress/please/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+        <HintPath>D:/Project/3D-Fortress/3D-Fortress/please/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-        <HintPath>D:/Project/3D-Fortress/please/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+        <HintPath>D:/Project/3D-Fortress/3D-Fortress/please/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-        <HintPath>D:/Project/3D-Fortress/please/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+        <HintPath>D:/Project/3D-Fortress/3D-Fortress/please/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-        <HintPath>D:/Project/3D-Fortress/please/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+        <HintPath>D:/Project/3D-Fortress/3D-Fortress/please/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-        <HintPath>D:/Project/3D-Fortress/please/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+        <HintPath>D:/Project/3D-Fortress/3D-Fortress/please/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-        <HintPath>D:/Project/3D-Fortress/please/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+        <HintPath>D:/Project/3D-Fortress/3D-Fortress/please/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="com.unity.cinemachine.editor">
-        <HintPath>D:/Project/3D-Fortress/please/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
+        <HintPath>D:/Project/3D-Fortress/3D-Fortress/please/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-        <HintPath>D:/Project/3D-Fortress/please/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+        <HintPath>D:/Project/3D-Fortress/3D-Fortress/please/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-        <HintPath>D:/Project/3D-Fortress/please/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+        <HintPath>D:/Project/3D-Fortress/3D-Fortress/please/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

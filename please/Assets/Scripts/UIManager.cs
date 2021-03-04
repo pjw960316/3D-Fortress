@@ -9,9 +9,13 @@ public class UIManager : MonoBehaviour
     public Image pause_screen;
     public Image menu;
 
+    public RectTransform windArrow;
+
     public Slider powerSlide;    
     public Slider hpBar;
     public Slider power_gauge;
+
+    public Transform td;
 
     public Text winText;  
     public Text remainTimeText;
@@ -19,7 +23,7 @@ public class UIManager : MonoBehaviour
     public Text player_weapon_number;
         
     private bool power_gauge_is_up = true;
-
+    
     private static UIManager instance;
     public static UIManager Instance
     {
@@ -39,9 +43,19 @@ public class UIManager : MonoBehaviour
         
 
     }
+    
+    void Update(){
+        
+        
+
+        float playerAngle = Mathf.Atan2(Camera.main.transform.forward.x, Camera.main.transform.forward.z) * Mathf.Rad2Deg; 
+        float windAngle = Mathf.Atan2(WindManager.wind_path.x, WindManager.wind_path.z) * Mathf.Rad2Deg;
+        
+        windArrow.rotation = Quaternion.Euler(0f, 0f, playerAngle - windAngle + 180);
+    }
 
     public void UpdateTimeText(int remainTime){
-        remainTimeText.text = "Remain Time : " + remainTime;
+        remainTimeText.text =  remainTime.ToString();
     }
 
     public void SetAnnounceText(string text){
